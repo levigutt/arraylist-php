@@ -21,51 +21,17 @@ $sorted = $files->map(   fn($file) => [filesize($file), $file]    )
                 ->map(   fn($file) => $file[1]                    );
 ```
 
-
-```php
-$cost_of_failed_orders = array_sum(array_map(fn($o) => $o->get_cost(), array_filter($orders, fn($o) => $o->is_failed())));
-```
-
-I tend to split it up to make it readable
-
-```php
-$failed_orders           = array_filter($orders, fn($o) => $o->is_failed());
-$failed_order_costs      = array_map(fn($o) => $o->get_cost(), $failed_orders);
-$failed_order_cost_total = array_sum($failed_order_costs);
-```
-
-but what I really prefer is to write this:
-```php
-$cost = $orders->filter(fn($o) => $o->is_failed())
-               ->map(   fn($o) => $o->get_cost() )
-               ->sum();
-```
-
-
-## basic usage
-
-```php
-$list = new ArrayList(10, 2, 55, 42, 69);
-$new_list = $list->filter(fn($n)     => strlen($n) > 1            )
-                 ->map(   fn($n)     => $n*= $n                   )
-                 ->sort(  fn($a, $b) => strlen($a) <=> strlen($b) );
-
-foreach($list as $key => $val)
-    print "$key => $val\n";
-```
-
-# in-place or returning
+## caveats
 
 some php functions work in the array itself, always returning true. for this
 library it makes more sense to return the `ArrayList` to allow method-chaining.
 
-this applies to: 
+this applies to:
  - `sort`
  - `shuffle`
  - `walk`
 
-# other differences
+### other differences
 
 `->sort()` works like `usort` when given a callback.
-
 
