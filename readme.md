@@ -15,10 +15,11 @@ need a stop gap.
 this is how I'd prefer to write it
 
 ```php
-$sorted = $files->map(   fn($file) => [filesize($file), $file]    )
-                ->filter(fn($file) => str_ends_with($file, ".exe"))
-                ->sort(  fn($a,$b) => $a[0] <=> $b[0]             )
-                ->map(   fn($file) => $file[1]                    );
+$list = new ArrayList(...$files);
+$sorted = $list->map(   fn($file) => [filesize($file), $file]    )
+               ->filter(fn($file) => str_ends_with($file, ".exe"))
+               ->sort(  fn($a,$b) => $a[0] <=> $b[0]             )
+               ->map(   fn($file) => $file[1]                    );
 ```
 
 ## caveats
