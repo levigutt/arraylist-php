@@ -16,8 +16,8 @@ this is how I'd prefer to write it
 
 ```php
 $list = new ArrayList(...$files);
-$sorted = $list->map(   fn($file) => [filesize($file), $file]    )
-               ->filter(fn($file) => str_ends_with($file, ".exe"))
+$sorted = $list->filter(fn($file) => str_ends_with($file, ".exe"))
+               ->map(   fn($file) => [filesize($file), $file]    )
                ->sort(  fn($a,$b) => $a[0] <=> $b[0]             )
                ->map(   fn($file) => $file[1]                    );
 ```
