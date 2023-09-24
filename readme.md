@@ -22,6 +22,8 @@ $sorted = $list->filter(fn($file) => str_ends_with($file, ".exe"))
                ->map(   fn($file) => $file[1]                    );
 ```
 
+sort works in place here too, but it also returns the sorted list.
+
 ## caveats
 
 some php functions work in the array itself, always returning true. for this
