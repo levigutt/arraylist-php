@@ -40,3 +40,37 @@ while($repeat--)
 }
 $assert->ok($count > 75 && $count < 125,
     "pick n=10 should give a specific value ~10% of the time");
+
+$letters = new ArrayList(...range('a', 'z'));
+$repeat = $letters->count();
+$seen = [];
+while($repeat--)
+{
+    $letter = $letters->pick();
+    $seen[$letter]??= 0;
+    $seen[$letter]++;
+}
+$assert->ok(0 == count(array_filter($seen, fn($c) => $c > 1)),
+    "pick() does not return same letter more than once, until all are spent");
+
+$letters = new ArrayList(...range('a', 'z'));
+$seen = [];
+foreach($letters->pick($letters->count()) as $letter)
+{
+    $seen[$letter]??= 0;
+    $seen[$letter]++;
+}
+$assert->ok(0 == count(array_filter($seen, fn($c) => $c > 1)),
+    "pick(n) does not contain duplicate letters");
+
+# roll
+$letters = new ArrayList(...range('a', 'z'));
+$seen = [];
+foreach($letters->roll($letters->count()) as $letter)
+{
+    $seen[$letter]??= 0;
+    $seen[$letter]++;
+}
+$assert->ok(0 < count(array_filter($seen, fn($c) => $c > 1)),
+    "roll() can return same letter more than once");
+

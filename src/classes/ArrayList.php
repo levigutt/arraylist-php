@@ -3,7 +3,8 @@
 class ArrayList implements \Countable, \Iterator, \Stringable
 {
     private array $array;
-    private int $current = 0;
+    private int   $current = 0;
+    private array $picked  = [];
 
     use Stack;
     use Set;
@@ -163,9 +164,31 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return array_rand($this->array, $num);
     }
 
-    public function pick() : mixed
+    public function pick(int $count = 1) : mixed
     {
-        return $this->array[array_rand($this->array)];
+        if( 1  == $count )
+        {
+            if( count($this->picked) == count($this->array) )
+                $this->picked = [];
+            $not_picked = array_flip(array_filter(array_keys($this->array), fn($k) => !in_array($k, $this->picked)));
+            $picked = $not_picked[array_rand($not_picked)];
+            $this->picked[] = $picked;
+            return $this->array[$picked];
+        }
+        $array = $this->array;
+        shuffle($array);
+        $pick  = array_slice($array, 0, $count);
+        return new ArrayList(...$pick);
+    }
+
+    public function roll(int $count = 1) : mixed
+    {
+        if( 1  == $count )
+            return $this->array[array_rand($this->array)];
+        $rolled = [];
+        while($count--)
+            $rolled[] = $this->array[array_rand($this->array)];
+        return new ArrayList(...$rolled);
     }
 
     public function shuffle() : ArrayList
