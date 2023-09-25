@@ -1,5 +1,6 @@
 {
   "name": "levigutt/arraylist-php",
+  "description": "array objects",
   "license": "GPL-2.0-only",
   "autoload": {
     "classmap": [ "src/classes/" ],
