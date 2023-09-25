@@ -1,6 +1,7 @@
 {
   "name": "levigutt/arraylist-php",
-  "description": "better arrays in oo-style",
+  "description": "array objects",
+  "license": "GPL-2.0-only",
   "autoload": {
     "classmap": [ "src/classes/" ],
     "files":    [ "src/functions.php" ]
@@ -13,5 +14,8 @@
       "type": "vcs",
       "url": "git@github.com:levigutt/testsimple-php.git"
     }
-  ]
+  ],
+  "scripts": {
+    "test": "vendor/bin/prove.php tests"
+  }
 }
