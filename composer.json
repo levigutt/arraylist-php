@@ -14,5 +14,8 @@
       "type": "vcs",
       "url": "git@github.com:levigutt/testsimple-php.git"
     }
-  ]
+  ],
+  "scripts": {
+    "test": "vendor/bin/prove.php test"
+  }
 }
