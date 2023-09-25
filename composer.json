@@ -16,6 +16,6 @@
     }
   ],
   "scripts": {
-    "test": "vendor/bin/prove.php test"
+    "test": "vendor/bin/prove.php tests"
   }
 }
