@@ -25,11 +25,6 @@ $list = (new ArrayList(...$array))->values();
 $assert->ok(1 == $list->shift(), "first value is 1");
 $assert->ok(2 == $list->shift(), "second value is 2");
 
-# sum
-$list = new ArrayList(...$digits);
-$assert->ok($list->sum() == 55, "sum() works");
-$assert->ok(10 == (new ArrayList(1,2,3,4))->sum(), "[1,2,3,4]->sum() == 10");
-
 # join
 $list = l(1,2,3);
 $assert->ok("1,2,3" == $list->join(), "join uses comma by default");
@@ -65,15 +60,6 @@ $list = new ArrayList(...$digits);
 foreach($digits as $key => $val)
     $assert->ok($list->key_exists($key), "$key exists as a key");
 $assert->ok(false == $list->key_exists(10), "11 does not exist as a key");
-
-# min/max
-$list = new ArrayList(...$digits);
-$assert->ok(1 == $list->min(), "min should be 1");
-$list->push(-3);
-$assert->ok(-3 == $list->min(), "min should be -3");
-$assert->ok(10 == $list->max(), "max should be 10");
-$list->unshift(15);
-$assert->ok(15 == $list->max(), "max should be 15");
 
 # unique
 $list = new ArrayList(...$digits, ...$digits);

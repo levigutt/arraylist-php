@@ -6,6 +6,11 @@ class ArrayList implements \Countable, \Iterator, \Stringable
     private int   $current = 0;
     private array $picked  = [];
 
+    public static function r(...$args)
+    {
+        return new ArrayList(range(...$args));
+    }
+
     use Stack;
     use Set;
 
@@ -101,11 +106,6 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return new ArrayList(...array_values($this->array));
     }
 
-    public function sum() : int|float
-    {
-        return array_sum($this->array);
-    }
-
     public function implode(string $separator = ',') : string
     {
         return implode($separator, $this->array);
@@ -128,6 +128,23 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return new ArrayList(...$slice);
     }
 
+    public function unique(int $flags = SORT_STRING) : ArrayList
+    {
+        return new ArrayList(...array_unique($this->array, $flags));
+    }
+
+    ########### MATH METHODS ###########
+
+    public function sum() : int|float
+    {
+        return array_sum($this->array);
+    }
+
+    public function product() : int|float
+    {
+        return array_product($this->array);
+    }
+
     public function min()
     {
         return min(...$this->array);
@@ -138,9 +155,34 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return max(...$this->array);
     }
 
-    public function unique(int $flags = SORT_STRING) : ArrayList
+    public function mean() : int|float
     {
-        return new ArrayList(...array_unique($this->array, $flags));
+        $array = array_filter($this->array, fn($n) => is_numeric($n));
+        if( !count($array) )
+            return 0;
+        return array_sum($array)/count($array);
+    }
+    public function avg() : int|float { return $this->mean(); }
+
+    public function median() : int|float
+    {
+        $array = array_filter($this->array, fn($n) => is_numeric($n));
+        if( !count($array) )
+            return 0;
+        if( count($array) % 2 )
+           return $array[floor(count($array)/2)];
+        $m = count($array)/2;
+        return ($array[$m-1]+$array[$m])/2;
+    }
+
+    public function mode() : mixed
+    {
+        $value_count = array_count_values($this->array);
+        $max = max($value_count);
+        $modes = array_keys(array_filter($value_count, fn($v) => $v == $max));
+        if( 1 == count($modes) )
+            return $modes[0];
+        return new ArrayList(...$modes);
     }
 
     ########### POPULATING METHODS ###########
