@@ -6,11 +6,6 @@ class ArrayList implements \Countable, \Iterator, \Stringable
     private int   $current = 0;
     private array $picked  = [];
 
-    public static function r(...$args)
-    {
-        return new ArrayList(range(...$args));
-    }
-
     use Stack;
     use Set;
 
