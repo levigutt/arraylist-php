@@ -58,9 +58,9 @@ $rms = sqrt($r / count($numbers));
 printf("%.13f\n", $rms);
 ```
 
-
 using arraylist:
-```
+
+```php
 $numbers = new ArrayList(...range(1,10));
 $rms = sqrt( $numbers->map(fn($n) => $n**2)->avg() );
 printf("%.13f\n", $rms);
