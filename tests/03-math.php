@@ -2,16 +2,16 @@
 $setup or die;
 
 # sum
-$list = new ArrayList(...$digits);
+$list = new ArrayList(...$numbers);
 $assert->ok(55 == $list->sum(),                   "[1..10]->sum() == 55");
 $assert->ok(10 == (new ArrayList(1,2,3,4))->sum(), "[1,2,3,4]->sum() == 10");
 
 # product
-$list = new ArrayList(...$digits);
+$list = new ArrayList(...$numbers);
 $assert->ok(3628800 == $list->product(), "[1..10]->product = 3628800");
 
 # min
-$list = new ArrayList(...$digits);
+$list = new ArrayList(...$numbers);
 $assert->ok(1 == $list->min(), "min should be 1");
 $list->push(-3);
 $assert->ok(-3 == $list->min(), "min should be -3");
@@ -20,14 +20,16 @@ $assert->ok(-3 == $list->min(), "min should be -3");
 $assert->ok(10 == $list->max(), "max should be 10");
 $list->unshift(15);
 $assert->ok(15 == $list->max(), "max should be 15");
+$list->push(20);
+$assert->ok(20 == $list->max(), "max should be 20");
 
-# avg (mean)
-$list = new ArrayList(...$digits);
+# mean (avg)
+$list = new ArrayList(...$numbers);
 $assert->ok(5.5 == $list->avg(),                    "[1..10]->avg() == 5.5");
 $assert->ok($list->mean() == $list->avg(),          "mean is alias for avg");
 $assert->ok(2.5 == (new ArrayList(1,2,3,4))->avg(), "[1,2,3,4]->avg() == 2.5");
 
-$list = new ArrayList(...$digits, ...range('a','z'));
+$list = new ArrayList(...$numbers, ...range('a','z'));
 $assert->ok(5.5 == $list->avg(),
     "non-numeric values are ignored in avg()");
 $list = new ArrayList(...range('a', 'z'));

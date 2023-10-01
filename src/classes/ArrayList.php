@@ -101,7 +101,7 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return new ArrayList(...array_values($this->array));
     }
 
-    public function implode(string $separator = ',') : string
+    public function implode(string $separator = '') : string
     {
         return implode($separator, $this->array);
     }

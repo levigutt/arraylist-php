@@ -2,14 +2,14 @@
 $setup or die;
 
 # intersect
-$list = new ArrayList(...$digits);
-$inter = $list->intersect(array_slice($digits, 0, 4), array_slice($digits, 2, 4));
+$list = new ArrayList(...$numbers);
+$inter = $list->intersect(array_slice($numbers, 0, 4), array_slice($numbers, 2, 4));
 $assert->ok(2 == $inter->count(), "( [1,2,3,4] (|) [3,4,5,6] )->count() == 2");
 $assert->ok("43" == $inter->pop().$inter->pop(),
                                   "( [1,2,3,4] (|) [3,4,5,6] ) == [3,4]");
 
-$inter = $list->intersect(  new ArrayList(...array_slice($digits, 0, 4))
-                         ,  new ArrayList(...array_slice($digits, 2, 4)));
+$inter = $list->intersect(  new ArrayList(...array_slice($numbers, 0, 4))
+                         ,  new ArrayList(...array_slice($numbers, 2, 4)));
 $assert->ok(2 == $inter->count(),     "( [1,2,3,4] (|) [3,4,5,6] )->count() == 2");
 $assert->ok("34" == $inter->join(''), "( [1,2,3,4] (|) [3,4,5,6] ) == [3,4]");
 
@@ -20,38 +20,41 @@ $assert->ok(5 == $union->count(),    "union removed duplicate in intersection");
 $assert->ok($list->superset($union), "union is superset of original");
 
 # merge
-$list = new ArrayList(...$digits);
+$list = new ArrayList(...$numbers);
 $list2 = new ArrayList(...$names);
 $list->merge($list2);
 $assert->ok($list2->pop() == $list->pop(),
     "list merged with list has new end item");
-$assert->ok($digits[0] == $list->shift(),
+$assert->ok($numbers[0] == $list->shift(),
     "list merged wih list has same start item");
 
-$list = l(...$digits);
+$list = l(...$numbers);
 $list2 = [100, 200, 300];
 $list->merge($list2);
 $assert->ok(300 == $list->max(),
     "list merged with array has new max");
 $assert->ok($list2[count($list2)-1] == $list->pop(),
     "list merged with array has new end item");
-$assert->ok($digits[0] == $list->shift(),
+$assert->ok($numbers[0] == $list->shift(),
     "list merged with array has same start item");
 
 # subset
-$list = new ArrayList(...$digits);
+$list = new ArrayList(...$numbers);
 $set = new ArrayList(1,2,3);
-$assert->ok($list->subset($set), "1,2,3 is a subset of 1..10");
-$assert->ok($list->subset([4,5]),"[4,5] is a subset of 1..10");
+$assert->ok($list->subset($set),        "1,2,3 is a subset of 1..10");
+$assert->ok($list->subset([4,5]),       "[4,5] is a subset of 1..10");
+$assert->ok($list->subset($numbers),    "[1..10] is a subset of 1..10");
+$assert->not_ok($list->subset([0,5]),   "[0,5] is not a subset of 1..10");
+$assert->not_ok($list->subset([2,11]),  "[2,11] is not a subset of 1..10");
 
 # superset
 $list = l(2,3,4,5);
-$assert->ok($list->superset($digits),       "[1..10] is superset of 2..5");
-$assert->ok($list->superset(l(...$digits)), "(1..10) is superset of 2..5");
-$assert->ok($list->superset(range(1,6)),    "[1..6] is superset of 2..5");
-$assert->ok($list->superset(range(2,5)),    "[2..5] is superset of 2..5");
-$assert->not_ok($list->superset(range(3,5)),"[3..5] is not superset of 2..5");
-$assert->not_ok($list->superset(l(1,3,4)),  "(1,3,4) is not superset of 2..5");
+$assert->ok($list->superset($numbers),       "[1..10] is superset of 2..5");
+$assert->ok($list->superset(l(...$numbers)), "(1..10) is superset of 2..5");
+$assert->ok($list->superset(range(1,6)),     "[1..6] is superset of 2..5");
+$assert->ok($list->superset(range(2,5)),     "[2..5] is superset of 2..5");
+$assert->not_ok($list->superset(range(3,5)), "[3..5] is not superset of 2..5");
+$assert->not_ok($list->superset(l(1,3,4)),   "(1,3,4) is not superset of 2..5");
 
 # same
 $list = l(1,2,3);
@@ -73,15 +76,15 @@ $assert->not_ok($list->identical([1,2,3,2,1]),"1..3 not identical to [1,2,3,2,1]
 $assert->not_ok($list->identical(l(3,2,1)),   "1..3 not identical to (3,2,1)");
 
 # diff
-$list = new ArrayList(...$digits);
-$diff = $list->diff($digits);
+$list = new ArrayList(...$numbers);
+$diff = $list->diff($numbers);
 $assert->ok(0 == $diff->count(), "diff on identical returns empty");
 
-$diff = $list->diff(array_slice($digits, 0, 6), array_slice($digits, 5, 4));
+$diff = $list->diff(array_slice($numbers, 0, 6), array_slice($numbers, 5, 4));
 $assert->ok(1 == $diff->count(), "diff with one difference returns one");
 $assert->ok(10 == $diff->pop(),  "diff with one difference returns missing item");
 
-$diff = $list->diff(new ArrayList(...array_slice($digits, 0, 6)), new ArrayList(...array_slice($digits, 5, 4)));
+$diff = $list->diff(new ArrayList(...array_slice($numbers, 0, 6)), new ArrayList(...array_slice($numbers, 5, 4)));
 $assert->ok(1 == $diff->count(), "diff: same count when passing ArrayList");
 $assert->ok(10 == $diff->pop(),  "diff: same pop when passing ArrayList");
 
