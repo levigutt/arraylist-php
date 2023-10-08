@@ -1,5 +1,9 @@
+#!/usr/bin/env php
 <?php
-$setup or die;
+
+require_once "vendor/autoload.php";
+require_once "t/testdata.php";
+$assert = new TestSimple\Assert();
 
 # filter
 $list = new ArrayList(...$numbers);
@@ -78,3 +82,5 @@ $assert->is('I am a string', $list->first(fn($n) => is_string($n)),
     "first string should be 'I am a string'");
 $assert->is(null, $list->first(fn($n) => is_array($n)),
     "first missing returns null");
+
+$assert->done();

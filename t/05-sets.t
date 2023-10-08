@@ -1,5 +1,9 @@
+#!/usr/bin/env php
 <?php
-$setup or die;
+
+require_once "vendor/autoload.php";
+require_once "t/testdata.php";
+$assert = new TestSimple\Assert();
 
 # intersect
 $list = new ArrayList(...$numbers);
@@ -111,3 +115,4 @@ $list2 = l(1,1,2);
 $diff = $list1->symdiff($list2);
 $assert->is(2, $diff->count(), "symdiff removes duplicates");
 
+$assert->done();

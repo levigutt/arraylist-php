@@ -1,5 +1,9 @@
+#!/usr/bin/env php
 <?php
-$setup or die;
+
+require_once "vendor/autoload.php";
+require_once "t/testdata.php";
+$assert = new TestSimple\Assert();
 
 # at
 $list = new ArrayList(...$array);
@@ -27,4 +31,6 @@ foreach($list as $key => $val)
         "iterator test, $i contains $array[$i]");
     ++$i;
 }
+
+$assert->done();
 

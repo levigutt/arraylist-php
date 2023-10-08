@@ -1,5 +1,9 @@
+#!/usr/bin/env php
 <?php
-$setup or die;
+
+require_once "vendor/autoload.php";
+require_once "t/testdata.php";
+$assert = new TestSimple\Assert();
 
 # pop
 $list = new ArrayList(...$array);
@@ -27,3 +31,4 @@ $list->unshift(4);
 $assert->is(3, $list->pop(), "unshift does not affect the end");
 $assert->is(4, $list->shift(), "shift/unshift removes/adds from beginning");
 
+$assert->done();

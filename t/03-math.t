@@ -1,5 +1,9 @@
+#!/usr/bin/env php
 <?php
-$setup or die;
+
+require_once "vendor/autoload.php";
+require_once "t/testdata.php";
+$assert = new TestSimple\Assert();
 
 # sum
 $list = new ArrayList(...$numbers);
@@ -52,3 +56,4 @@ $list = new ArrayList(1,2,3,4,5);
 $assert->ok($list->sort()->identical($list->mode()->sort()),
     "mode returns all with same highest occurrence");
 
+$assert->done();

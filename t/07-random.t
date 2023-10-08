@@ -1,5 +1,9 @@
+#!/usr/bin/env php
 <?php
-$setup or die;
+
+require_once "vendor/autoload.php";
+require_once "t/testdata.php";
+$assert = new TestSimple\Assert();
 
 # shuffle
 $repeat = 10000;
@@ -74,3 +78,4 @@ foreach($letters->roll($letters->count()) as $letter)
 $assert->ok(0 < count(array_filter($seen, fn($c) => $c > 1)),
     "roll() can return same letter more than once");
 
+$assert->done();

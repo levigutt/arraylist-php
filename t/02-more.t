@@ -1,5 +1,9 @@
+#!/usr/bin/env php
 <?php
-$setup or die;
+
+require_once "vendor/autoload.php";
+require_once "t/testdata.php";
+$assert = new TestSimple\Assert();
 
 # in / contains
 $list = new ArrayList(...$numbers);
@@ -77,3 +81,4 @@ $assert->is(5, $list->count(),     "fill has correct length");
 $assert->is('YAY', $list->pop(),   "fill sets values");
 $assert->is('YAY', $list->shift(), "fill sets values");
 
+$assert->done();
