@@ -3,7 +3,7 @@
 
 require_once "vendor/autoload.php";
 require_once "t/testdata.php";
-$assert = new TestSimple\Assert();
+use function TestSimple\{ok, is, done_testing};
 
 # shuffle
 $repeat = 10000;
@@ -16,7 +16,7 @@ while($repeat--)
     if( $value == $list->pop() )
         $count++;
 }
-$assert->ok($count > 750 && $count < 1250,
+ok($count > 750 && $count < 1250,
     "shuffle n=10 should pop a specific value ~10% of the time");
 
 # rand
@@ -29,7 +29,7 @@ while($repeat--)
     if( $key == $list->rand() )
         $count++;
 }
-$assert->ok($count > 750 && $count < 1250,
+ok($count > 750 && $count < 1250,
     "rand n=10 should give a specific key ~10% of the time");
 
 # pick
@@ -42,7 +42,7 @@ while($repeat--)
     if( $value == $list->pick() )
         $count++;
 }
-$assert->ok($count > 750 && $count < 1250,
+ok($count > 750 && $count < 1250,
     "pick n=10 should give a specific value ~10% of the time");
 
 $letters = new ArrayList(...range('a', 'z'));
@@ -54,7 +54,7 @@ while($repeat--)
     $seen[$letter]??= 0;
     $seen[$letter]++;
 }
-$assert->is(0, count(array_filter($seen, fn($c) => $c > 1)),
+is(0, count(array_filter($seen, fn($c) => $c > 1)),
     "pick() does not return same letter more than once, until all are spent");
 
 $letters = new ArrayList(...range('a', 'z'));
@@ -64,7 +64,7 @@ foreach($letters->pick($letters->count()) as $letter)
     $seen[$letter]??= 0;
     $seen[$letter]++;
 }
-$assert->is(0, count(array_filter($seen, fn($c) => $c > 1)),
+is(0, count(array_filter($seen, fn($c) => $c > 1)),
     "pick(n) does not contain duplicate letters");
 
 # roll
@@ -75,7 +75,7 @@ foreach($letters->roll($letters->count()) as $letter)
     $seen[$letter]??= 0;
     $seen[$letter]++;
 }
-$assert->ok(0 < count(array_filter($seen, fn($c) => $c > 1)),
+ok(0 < count(array_filter($seen, fn($c) => $c > 1)),
     "roll() can return same letter more than once");
 
-$assert->done();
+done_testing();

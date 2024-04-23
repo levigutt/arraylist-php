@@ -128,6 +128,20 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return new ArrayList(...array_unique($this->array, $flags));
     }
 
+    public function chunk(int $length, bool $preserve_keys = false) : ArrayList
+    {
+        $chunk = array_chunk($this->array, $length, $preserve_keys);
+        return new ArrayList(...$chunk);
+    }
+
+    public function column(  int|string|null $column_key
+                          ,  int|string|null $index_key = null
+                          ) : ArrayList
+    {
+        $column = array_column($this->array, $column_key, $index_key);
+        return new ArrayList(...$column);
+    }
+
     ########### MATH METHODS ###########
 
     public function sum() : int|float
