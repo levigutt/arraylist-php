@@ -63,7 +63,18 @@ is(3, $list->shift(),   "splice replaces only specified");
 $list = new ArrayList(...$numbers);
 foreach($numbers as $key => $val)
     ok($list->key_exists($key), "$key exists as a key");
-is(false, $list->key_exists(10), "11 does not exist as a key");
+is(false, $list->key_exists(10), "10 does not exist as a key");
+
+# keys exists
+$list = new ArrayList(...$numbers);
+foreach($numbers as $key => $val)
+    ok($list->keys_exists($key), "$key exists as a key");
+is(false, $list->keys_exists(10), "10 does not exist as a key");
+
+$numbers_chunks = array_chunk($numbers, count($numbers)/2);
+$num_chunk = $numbers_chunks[0];
+ok($list->keys_exists(...$num_chunk), sprintf("each of the keys in %s exists in the array", json_encode(compact('num_chunk'))));
+is(false, $list->keys_exists(1, 10), "1, 10 does not both exist as keys");
 
 # unique
 $list = new ArrayList(...$numbers, ...$numbers);
