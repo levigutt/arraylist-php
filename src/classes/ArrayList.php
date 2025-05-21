@@ -78,6 +78,14 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return array_key_exists($key, $this->array);
     }
 
+    public function keys_exists(...$keys) : bool
+    {
+        foreach($keys as $key)
+            if ( !array_key_exists($key, $this->array) )
+                return false;
+        return true;
+    }
+
     ########### EXTRACTING METHODS ###########
 
     public function get(mixed $key) : mixed
