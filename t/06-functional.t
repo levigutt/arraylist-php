@@ -61,7 +61,7 @@ is(3628800, $factorial, "factorial using ->reduce()");
 
 # any
 $list = new ArrayList(...$numbers);
-ok($list->any(fn($n) => $n > 5), "should have any higher than 5");
+ok($list->any(fn($n) => $n > 5), "should have some numbers higher than 5");
 is(false, $list->any(fn($n) => $n > 10), "shouldn't have any higher than 10");
 
 # all
@@ -70,9 +70,11 @@ ok($list->all(fn($n) => is_int($n)), "all should be int");
 is(false, $list->all(fn($n) => is_array($n)), "all shouldn't be array");
 
 # none
-$list = new ArrayList(...$numbers);
-is(false, $list->none(fn($n) => is_int($n)), "all should be int");
+$list = new ArrayList(...$names);
+ok($list->none(fn($n) => is_int($n)),   "none should be int");
 ok($list->none(fn($n) => is_array($n)), "all shouldn't be array");
+$list = new ArrayList(...$names, ...$numbers);
+is(false, $list->none(fn($n) => is_int($n)), "none should fail unless all comply");
 
 # first
 $list = new ArrayList(...$numbers);

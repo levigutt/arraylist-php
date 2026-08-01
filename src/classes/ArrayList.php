@@ -223,9 +223,9 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         return array_rand($this->array, $num);
     }
 
-    public function pick(int $count = 1) : mixed
+    public function pick(?int $count = null) : mixed
     {
-        if( 1  == $count )
+        if( null == $count )
         {
             if( count($this->picked) == count($this->array) )
                 $this->picked = [];
@@ -237,6 +237,8 @@ class ArrayList implements \Countable, \Iterator, \Stringable
         $array = $this->array;
         shuffle($array);
         $pick  = array_slice($array, 0, $count);
+        if ( 1 == $count )
+            return $pick[0];
         return new ArrayList(...$pick);
     }
 
@@ -258,7 +260,7 @@ class ArrayList implements \Countable, \Iterator, \Stringable
 
     ########### FUNCTIONAL METHODS ###########
 
-    public function sort(Callable $cb = null) : ArrayList
+    public function sort(?Callable $cb = null) : ArrayList
     {
         if( $cb )
             usort($this->array, $cb);
@@ -293,12 +295,12 @@ class ArrayList implements \Countable, \Iterator, \Stringable
 
     public function all(Callable $cb) : bool
     {
-        return count($this->array) == array_sum(array_map($cb, $this->array));
+        return $this->count() === $this->filter($cb)->count();
     }
 
     public function none(Callable $cb) : bool
     {
-        return !$this->all($cb);
+        return !$this->any($cb);
     }
 
     public function first(Callable $cb) : mixed

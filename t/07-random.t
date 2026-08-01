@@ -45,6 +45,21 @@ while($repeat--)
 ok($count > 750 && $count < 1250,
     "pick n=10 should give a specific value ~10% of the time");
 
+$repeat = 100;
+$count = 0;
+while($repeat--)
+{
+    $list = new ArrayList(...$numbers);
+    $retries = 5;
+    while($retries--)
+    {
+        $val = $list->pick(1);
+        if ( $val == $list->pick(1) )
+            $count++;
+    }
+}
+ok($count > 0, "->pick(1) allows for repeating values before all are exhaused");
+
 $letters = new ArrayList(...range('a', 'z'));
 $repeat = $letters->count();
 $seen = [];
